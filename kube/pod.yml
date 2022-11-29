@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rating-producer
+  labels:
+    app.kubernetes.io/name: rating-producer
+spec:
+  containers:
+    - name: test-end
+      image: ${DOCKER_USERNAME}/rating-producer
+      ports:
+        - containerPort: 9000
+      env:
+        - name: CLUSTER_IP
+          value: ${CLUSTER_IP}
+  hostAliases:
+    - ip: ${CLUSTER_IP}
+      hostnames:
+        - "kafka-broker"
